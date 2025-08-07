@@ -37,7 +37,7 @@ This is a backend API built with Django REST Framework and PostgreSQL (via Docke
 ---
 
 ## 🧩 Project Structure
-
+```markdown
 drf_e_commerce_api/
 ├── app/
     ├── accounts/ # User registration, login, profile
@@ -48,7 +48,7 @@ drf_e_commerce_api/
 ├── docker-compose.yml
 ├── requirements.txt
 └── README.md
-
+```
 
 ---
 
@@ -71,4 +71,13 @@ cd drf_e_commerce_api
     SECRET_KEY=your-secret-key
     DEBUG=True
 ```
----
+### 3. Build and run containers
+```bash
+docker-compose up --build
+```
+
+### 4. Run Migrations and Create Superuser
+```bash
+docker-compose exec web python manage.py migrate
+docker-compose exec web python manage.py createsuperuser
+```
