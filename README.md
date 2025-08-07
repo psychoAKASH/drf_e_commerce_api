@@ -105,3 +105,45 @@ docker-compose exec web python manage.py createsuperuser
 - Frontend (React/Vue) integration
 
 - Admin dashboard panel
+
+---
+
+## 📌 Samples for API endpoints
+
+### 🔐 Auth Endpoints (JWT)
+| Method | Endpoint              | Description                |
+| ------ | --------------------- | -------------------------- |
+| POST   | `/api/token/`         | Get access & refresh token |
+| POST   | `/api/token/refresh/` | Refresh access token       |
+
+```bash
+POST /api/token/
+{
+  "email": "user@example.com",
+  "password": "yourpassword"
+}
+```
+
+### 👤 User Profile
+| Method | Endpoint        | Description           |
+| ------ | --------------- | --------------------- |
+| GET    | `/api/profile/` | Get current user info |
+| PUT    | `/api/profile/` | Update profile        |
+
+### 🛍️ Products & Categories
+| Method | Endpoint                        | Description         |
+| ------ | ------------------------------- | ------------------- |
+| GET    | `/api/categories/`              | List all categories |
+| GET    | `/api/products/`                | List all products   |
+| GET    | `/api/products/?search=shirt`   | Search products     |
+| GET    | `/api/products/?ordering=price` | Order products      |
+| GET    | `/api/products/?category=1`     | Filter by category  |
+| GET    | `/api/products/<id>/`           | Get product details |
+
+### 🛒 Cart API
+| Method | Endpoint            | Description           |
+| ------ | ------------------- | --------------------- |
+| GET    | `/api/cart/`        | View cart             |
+| POST   | `/api/cart/add/`    | Add item to cart      |
+| POST   | `/api/cart/remove/` | Remove item from cart |
+
