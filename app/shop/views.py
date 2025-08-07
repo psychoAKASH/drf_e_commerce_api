@@ -17,6 +17,28 @@ class CategoryViewSet(viewsets.ModelViewSet):
     serializer_class = CategorySerializer
     permission_classes = [IsAdminOrReadOnly]
 
+    def get_queryset(self):
+        if self.request.query_params == {}:
+            cached_categories = cache.get("category_list")
+            if cached_categories:
+                return cached_categories
+            queryset = list(Category.objects.all())
+            cache.set("category_list", queryset, timeout=3600)
+            return queryset
+        return Category.objects.all()
+
+    def perform_create(self, serializer):
+        cache.delete("category_list")
+        serializer.save()
+
+    def perform_update(self, serializer):
+        cache.delete("category_list")
+        serializer.save()
+
+    def perform_destroy(self, instance):
+        cache.delete("category_list")
+        instance.delete()
+
 class ProductViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
@@ -30,11 +52,11 @@ class ProductViewSet(viewsets.ReadOnlyModelViewSet):
             cached_products = cache.get("product_list")
             if cached_products:
                 return cached_products
-            queryset = Product.objects.all()
+            queryset = list(Product.objects.select_related('category').all())
             cache.set("product_list", queryset, timeout=3600)
             return queryset
 
-        return Product.objects.all()
+        return Product.objects.select_related('category').all()
 
     def perform_update(self, serializer):
         cache.delete("product_list")

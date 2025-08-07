@@ -19,3 +19,15 @@ class Order(models.Model):
     def __str__(self):
         return f"Order #{self.id} by {self.user.email}"
 
+class CartItem(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='cart_items')
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    quantity = models.PositiveIntegerField(default=1)
+    added_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = ('user', 'product')  # Prevent duplicate entries
+
+    def __str__(self):
+        return f"{self.user.username} - {self.product.name} - {self.quantity}"
+
