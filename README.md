@@ -81,3 +81,27 @@ docker-compose up --build
 docker-compose exec web python manage.py migrate
 docker-compose exec web python manage.py createsuperuser
 ```
+---
+
+## 📬 API Endpoints (Examples)
+
+| Endpoint              | Method          | Description                 |
+| --------------------- | --------------- | --------------------------- |
+| `/api/register/`      | POST            | Register new user           |
+| `/api/token/`         | POST            | Login and get token         |
+| `/api/token/refresh/` | POST            | Refresh access token        |
+| `/api/products/`      | GET             | List all products           |
+| `/api/cart/`          | GET/POST/DELETE | Cart operations             |
+| `/api/orders/`        | GET/POST        | Place/view orders           |
+| `/api/profile/`       | GET/PUT         | View or update user profile |
+
+---
+
+## ✅ To Do (Future Improvements)
+- Real-time notifications via Django Channels
+
+- Payment integration
+
+- Frontend (React/Vue) integration
+
+- Admin dashboard panel
