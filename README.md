@@ -85,15 +85,15 @@ docker-compose exec web python manage.py createsuperuser
 
 ## 📬 API Endpoints (Examples)
 
-| Endpoint              | Method          | Description                 |
-| --------------------- | --------------- | --------------------------- |
-| `/api/register/`      | POST            | Register new user           |
-| `/api/token/`         | POST            | Login and get token         |
-| `/api/token/refresh/` | POST            | Refresh access token        |
-| `/api/products/`      | GET             | List all products           |
-| `/api/cart/`          | GET/POST/DELETE | Cart operations             |
-| `/api/orders/`        | GET/POST        | Place/view orders           |
-| `/api/profile/`       | GET/PUT         | View or update user profile |
+| Endpoint                       | Method          | Description                 |
+|--------------------------------| --------------- | --------------------------- |
+| `/api/accounts/register`       | POST            | Register new user           |
+| `/api/accounts/login`          | POST            | Login and get token         |
+| `/api/accounts/token/refresh/` | POST            | Refresh access token        |
+| `/api/products/`               | GET             | List all products           |
+| `/api/cart/`                   | GET/POST/DELETE | Cart operations             |
+| `/api/orders/`                 | GET/POST        | Place/view orders           |
+| `/api/accounts/profile/`       | GET/PUT         | View or update user profile |
 
 ---
 
@@ -111,10 +111,10 @@ docker-compose exec web python manage.py createsuperuser
 ## 📌 Samples for API endpoints
 
 ### 🔐 Auth Endpoints (JWT)
-| Method | Endpoint              | Description                |
-| ------ | --------------------- | -------------------------- |
-| POST   | `/api/token/`         | Get access & refresh token |
-| POST   | `/api/token/refresh/` | Refresh access token       |
+| Method | Endpoint                       | Description                |
+| ------ |--------------------------------| -------------------------- |
+| POST   | `/api/accounts/login`          | Get access & refresh token |
+| POST   | `/api/accounts/token/refresh/` | Refresh access token       |
 
 ```bash
 POST /api/token/

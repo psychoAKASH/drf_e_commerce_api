@@ -52,8 +52,8 @@ class ProductViewSet(viewsets.ReadOnlyModelViewSet):
             cached_products = cache.get("product_list")
             if cached_products:
                 return cached_products
-            queryset = list(Product.objects.select_related('category').all())
-            cache.set("product_list", queryset, timeout=3600)
+            queryset = Product.objects.select_related('category').all()
+            cache.set("product_list", list(queryset.values_list('id', flat=True)), timeout=3600)
             return queryset
 
         return Product.objects.select_related('category').all()

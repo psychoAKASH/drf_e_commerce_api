@@ -90,6 +90,7 @@ class OrderViewSet(viewsets.ModelViewSet):
         return Response(OrderSerializer(order).data, status=status.HTTP_201_CREATED)
 
 class CartItemViewSet(viewsets.ModelViewSet):
+    queryset = CartItem.objects.all()
     serializer_class = CartItemSerializer
     permission_classes = [IsAuthenticated]
 
