@@ -1,6 +1,10 @@
-from rest_framework import viewsets, permissions
+from rest_framework import viewsets, permissions,filters
 from .models import Category, Product
 from .serializers import CategorySerializer, ProductSerializer
+from django_filters.rest_framework import DjangoFilterBackend
+from django.core.cache import cache
+
+
 
 class IsAdminOrReadOnly(permissions.BasePermission):
     def has_permission(self, request, view):
@@ -13,8 +17,32 @@ class CategoryViewSet(viewsets.ModelViewSet):
     serializer_class = CategorySerializer
     permission_classes = [IsAdminOrReadOnly]
 
-class ProductViewSet(viewsets.ModelViewSet):
+class ProductViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
-    permission_classes = [IsAdminOrReadOnly]
+    filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
+    filterset_fields = ['name', 'stock', 'price']
+    search_fields = ['name', 'description']
+    ordering_fields = ['price', 'stock', 'name']
+
+    def get_queryset(self):
+        if self.request.query_params == {}:
+            cached_products = cache.get("product_list")
+            if cached_products:
+                return cached_products
+            queryset = Product.objects.all()
+            cache.set("product_list", queryset, timeout=3600)
+            return queryset
+
+        return Product.objects.all()
+
+    def perform_update(self, serializer):
+        cache.delete("product_list")
+        serializer.save()
+
+    def perform_destroy(self, instance):
+        cache.delete("product_list")
+        instance.delete()
+
+
 

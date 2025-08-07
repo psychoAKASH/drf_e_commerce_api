@@ -6,3 +6,4 @@ redis
 django-redis
 channels
 channels-redis
+django-filter
